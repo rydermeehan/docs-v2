@@ -21,7 +21,7 @@ Continue to use Chronograf with **InfluxDB Cloud** and **InfluxDB OSS 2.0** and 
 [1.x compatibility API](/influxdb/v2.0/reference/api/influxdb-1x/).
 
 ## Create an InfluxDB connection
-1. In Choronograf, click **Configuration** in the left navigation bar,
+1. In Chronograf, click **Configuration** in the left navigation bar,
    and then click **{{< icon "plus" >}} Add Connection**.
 2. Toggle the **InfluxDB v2 Auth** option at the bottom of the form.
 
@@ -29,7 +29,7 @@ Continue to use Chronograf with **InfluxDB Cloud** and **InfluxDB OSS 2.0** and 
 
 3. Enter your InfluxDB connection credentials:
     - **Connection URL:** InfluxDB URL _(see [InfluxDB Cloud regions](/influxdb/cloud/reference/regions/)
-      or [InfluxDB OSS URLs](/influxdb/v2.0/reference/urls/))_
+      or [InfluxDB OSS URLs](/influxdb/v2.0/reference/urls/)_
 
       ```
       http://localhost:8086
@@ -94,4 +94,3 @@ To complete administrative tasks, use the following:
 ### Limited InfluxQL support
 InfluxDB Cloud and InfluxDB OSS 2.0 support InfluxQL **read-only** queries.
 For more information, see [InfluxQL support](/influxdb/v2.0/query-data/influxql/#influxql-support).
-
