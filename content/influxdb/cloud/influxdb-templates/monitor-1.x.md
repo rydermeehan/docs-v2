@@ -1,5 +1,5 @@
 ---
-title: Monitor InfluxDB 1.x using a template
+title: Monitor InfluxDB OSS 1.x using a template
 description: >
   Monitor your InfluxDB 1.x instance using InfluxDB Cloud and
   a pre-built InfluxDB template.
