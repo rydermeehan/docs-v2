@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Pierce's BJJ Academy</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app">
+  <!-- Top Bar -->
+  <header id="top-bar">
+    <div class="top-bar-left">
+      <button id="back-btn" class="icon-btn hidden" onclick="goBack()">&#9664;</button>
+      <h1 id="page-title">Pierce's BJJ Academy</h1>
+    </div>
+    <div class="top-bar-right">
+      <div id="belt-display" onclick="showScreen('progress')">
+        <div id="mini-belt"></div>
+        <span id="stripe-dots"></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- HOME SCREEN -->
+  <section id="screen-home" class="screen active">
+    <div class="hero-card">
+      <div class="hero-avatar" id="hero-avatar">&#129504;</div>
+      <h2>Welcome, Pierce!</h2>
+      <p id="hero-subtitle" class="subtitle">Let's train today!</p>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num" id="stat-sessions">0</span>
+          <span class="stat-label">Sessions</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num" id="stat-streak">0</span>
+          <span class="stat-label">Streak</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num" id="stat-moves">0</span>
+          <span class="stat-label">Moves Learned</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <h3>Today's Training</h3>
+      <span class="badge" id="week-badge">Week 1</span>
+    </div>
+
+    <div id="todays-lesson" class="lesson-preview-card" onclick="startTodaysLesson()">
+      <div class="lesson-preview-content">
+        <div class="lesson-icon">&#129354;</div>
+        <div>
+          <h4 id="today-lesson-title">Loading...</h4>
+          <p id="today-lesson-desc" class="text-muted">Loading...</p>
+          <div class="lesson-meta">
+            <span class="tag tag-time">30 min</span>
+            <span class="tag" id="today-lesson-type">Solo + Partner</span>
+          </div>
+        </div>
+      </div>
+      <div class="start-arrow">&#9654;</div>
+    </div>
+
+    <div class="quick-actions">
+      <button class="action-card" onclick="showScreen('curriculum')">
+        <span class="action-icon">&#128218;</span>
+        <span>Full Program</span>
+      </button>
+      <button class="action-card" onclick="showScreen('moves')">
+        <span class="action-icon">&#129354;</span>
+        <span>Move Library</span>
+      </button>
+      <button class="action-card" onclick="showScreen('timer')">
+        <span class="action-icon">&#9201;</span>
+        <span>Drill Timer</span>
+      </button>
+      <button class="action-card" onclick="showScreen('progress')">
+        <span class="action-icon">&#127942;</span>
+        <span>Progress</span>
+      </button>
+    </div>
+
+    <div class="section-header">
+      <h3>Recent Achievements</h3>
+    </div>
+    <div id="recent-achievements" class="achievements-list">
+      <p class="text-muted">Complete your first session to earn achievements!</p>
+    </div>
+  </section>
+
+  <!-- CURRICULUM SCREEN -->
+  <section id="screen-curriculum" class="screen">
+    <div class="phase-tabs">
+      <button class="phase-tab active" data-phase="1" onclick="showPhase(1)">Foundation<br><small>Wk 1-8</small></button>
+      <button class="phase-tab" data-phase="2" onclick="showPhase(2)">Building<br><small>Wk 9-16</small></button>
+      <button class="phase-tab" data-phase="3" onclick="showPhase(3)">Competition<br><small>Wk 17-24</small></button>
+    </div>
+    <div id="curriculum-list" class="curriculum-list"></div>
+  </section>
+
+  <!-- LESSON DETAIL SCREEN -->
+  <section id="screen-lesson" class="screen">
+    <div id="lesson-detail"></div>
+  </section>
+
+  <!-- ACTIVE LESSON SCREEN (running a class) -->
+  <section id="screen-active-lesson" class="screen">
+    <div id="active-lesson-content"></div>
+  </section>
+
+  <!-- MOVE LIBRARY SCREEN -->
+  <section id="screen-moves" class="screen">
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all" onclick="filterMoves('all')">All</button>
+      <button class="filter-btn" data-filter="solo" onclick="filterMoves('solo')">Solo Drills</button>
+      <button class="filter-btn" data-filter="partner" onclick="filterMoves('partner')">With Dad</button>
+      <button class="filter-btn" data-filter="dummy" onclick="filterMoves('dummy')">With Dummy</button>
+    </div>
+    <div id="moves-list" class="moves-grid"></div>
+  </section>
+
+  <!-- MOVE DETAIL SCREEN -->
+  <section id="screen-move-detail" class="screen">
+    <div id="move-detail-content"></div>
+  </section>
+
+  <!-- TIMER SCREEN -->
+  <section id="screen-timer" class="screen">
+    <div class="timer-container">
+      <h3>Drill Timer</h3>
+      <div class="timer-display" id="timer-display">0:00</div>
+      <div class="timer-round-info">
+        Round <span id="timer-round">1</span> of <span id="timer-total-rounds">5</span>
+      </div>
+      <div class="timer-controls">
+        <button class="timer-btn" onclick="adjustTimer('rounds', -1)">-</button>
+        <span class="timer-label">Rounds: <span id="round-count">5</span></span>
+        <button class="timer-btn" onclick="adjustTimer('rounds', 1)">+</button>
+      </div>
+      <div class="timer-controls">
+        <button class="timer-btn" onclick="adjustTimer('work', -5)">-5s</button>
+        <span class="timer-label">Work: <span id="work-time">30</span>s</span>
+        <button class="timer-btn" onclick="adjustTimer('work', 5)">+5s</button>
+      </div>
+      <div class="timer-controls">
+        <button class="timer-btn" onclick="adjustTimer('rest', -5)">-5s</button>
+        <span class="timer-label">Rest: <span id="rest-time">10</span>s</span>
+        <button class="timer-btn" onclick="adjustTimer('rest', 5)">+5s</button>
+      </div>
+      <div class="timer-actions">
+        <button class="btn btn-primary btn-lg" id="timer-start-btn" onclick="toggleTimer()">START</button>
+        <button class="btn btn-secondary" onclick="resetTimer()">Reset</button>
+      </div>
+      <div class="timer-presets">
+        <h4>Quick Presets</h4>
+        <button class="preset-btn" onclick="setTimerPreset(5,30,10)">Standard Drill</button>
+        <button class="preset-btn" onclick="setTimerPreset(3,60,15)">Long Drill</button>
+        <button class="preset-btn" onclick="setTimerPreset(3,120,30)">Positional Sparring</button>
+        <button class="preset-btn" onclick="setTimerPreset(8,20,10)">Quick Reps</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRESS SCREEN -->
+  <section id="screen-progress" class="screen">
+    <div class="progress-belt-section">
+      <h3>Pierce's Belt Progress</h3>
+      <div id="belt-visual" class="belt-visual"></div>
+      <p id="belt-status" class="belt-status-text"></p>
+      <div id="next-milestone" class="next-milestone"></div>
+    </div>
+
+    <div class="progress-section">
+      <h3>Training Log</h3>
+      <div id="calendar-view" class="calendar-grid"></div>
+    </div>
+
+    <div class="progress-section">
+      <h3>Achievements</h3>
+      <div id="all-achievements" class="achievements-grid"></div>
+    </div>
+
+    <div class="progress-section">
+      <h3>Move Mastery</h3>
+      <div id="mastery-list" class="mastery-list"></div>
+    </div>
+
+    <div class="progress-actions">
+      <button class="btn btn-secondary" onclick="if(confirm('Reset all progress? This cannot be undone.')){resetProgress();}">Reset Progress</button>
+    </div>
+  </section>
+
+  <!-- Bottom Nav -->
+  <nav id="bottom-nav">
+    <button class="nav-btn active" data-screen="home" onclick="showScreen('home')">
+      <span class="nav-icon">&#127968;</span>
+      <span>Home</span>
+    </button>
+    <button class="nav-btn" data-screen="curriculum" onclick="showScreen('curriculum')">
+      <span class="nav-icon">&#128218;</span>
+      <span>Program</span>
+    </button>
+    <button class="nav-btn" data-screen="moves" onclick="showScreen('moves')">
+      <span class="nav-icon">&#129354;</span>
+      <span>Moves</span>
+    </button>
+    <button class="nav-btn" data-screen="timer" onclick="showScreen('timer')">
+      <span class="nav-icon">&#9201;</span>
+      <span>Timer</span>
+    </button>
+    <button class="nav-btn" data-screen="progress" onclick="showScreen('progress')">
+      <span class="nav-icon">&#127942;</span>
+      <span>Progress</span>
+    </button>
+  </nav>
+</div>
+
+<!-- Celebration Modal -->
+<div id="celebration-modal" class="modal hidden">
+  <div class="modal-content celebration">
+    <div class="celebration-emoji" id="celebration-emoji">&#127881;</div>
+    <h2 id="celebration-title">Awesome!</h2>
+    <p id="celebration-text">You earned something!</p>
+    <button class="btn btn-primary" onclick="closeCelebration()">OSS! &#128170;</button>
+  </div>
+</div>
+
+<script src="curriculum.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
