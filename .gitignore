@@ -9,3 +9,8 @@ node_modules
 /content/influxdb/*/api/*.html
 /api-docs/redoc-static.html*
 .vscode/*
+
+# Local environment files (never commit credentials)
+.env
+.env.local
+.env.*.local

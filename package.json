@@ -5,9 +5,18 @@
   "description": "InfluxDB documentation",
   "license": "MIT",
   "devDependencies": {
+    "@higgsfield/client": "^0.2.6",
+    "@types/node": "^26.6.4",
     "autoprefixer": "^10.2.5",
+    "dotenv": "^18.0.6",
     "hugo-extended": "^0.83.1",
     "postcss": "^8.2.13",
-    "postcss-cli": "^8.3.1"
+    "postcss-cli": "^8.3.1",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  },
+  "scripts": {
+    "higgsfield:example": "tsx index.ts",
+    "typecheck": "tsc -p tsconfig.json"
   }
 }
